@@ -34,7 +34,7 @@ DEALINGS IN THE SOFTWARE.
 ### Read Evaluate Press, LLC
 
 Ratio.swift derived from Rate.swift from Read Evaluate Press
-
+Original Code at https://github.com/Flight-School/Rate
 This functionality is discussed in Chapter 5 of
 [Flight School Guide to Swift Numbers](https://flight.school/books/numbers).
 

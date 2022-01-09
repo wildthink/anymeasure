@@ -14,9 +14,10 @@ final class AnyMeasureTests: XCTestCase {
         
         typealias FlowRate = Ratio<UnitVolume, UnitDuration>
         let rate: FlowRate = 84760(.cubicFeet, per: .seconds)
-//        let dailyFlow =
-//            84760(UnitVolume.cubicFeet, per: UnitDuration.seconds)
-//        * 24(.hours)
+        // let rate = FlowRate(84760, .cubicFeet, per: .seconds)
+        // let dailyFlow =
+        //      84760(UnitVolume.cubicFeet, per: UnitDuration.seconds)
+        //      * 24(.hours)
         
         XCTAssert(result == (rate * 24(.hours)).converted(to: .megaliters))
     }
@@ -38,10 +39,12 @@ final class AnyMeasureTests: XCTestCase {
     
     func testMeasurement() throws {
         var m: Mass = .zero
+        let m2 = Mass(123, .kilograms) + 12(.stones)
         
         m = 123(.kilograms)
             + 12(.stones)
-        print(#function, m, m.converted(to: .pounds))
+        
+        XCTAssert(m == m2)
         XCTAssert(m == 439.16885659359076(.pounds))
     }
     
@@ -54,5 +57,10 @@ final class AnyMeasureTests: XCTestCase {
         let usd: Currency = 123.5(.USD)
         let euro = usd.converted(to: .EUR)
         XCTAssert(euro == 99.09887(.EUR))
+    }
+    
+    func testAutocomplete() {
+        let v: Velocity = 55(.kilometers, per: .hours)
+        print(v * 2 * 2(.hours)) //  -> 220 km
     }
 }

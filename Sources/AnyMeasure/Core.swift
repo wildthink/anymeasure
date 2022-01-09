@@ -4,9 +4,9 @@ import Foundation
 // MARK: - Ratio Constructor and Conversion Extensions
 public extension BinaryFloatingPoint {
     func callAsFunction <N: Dimension, D: Dimension>(
-        _ numerator: N, per denomenator: D)
+        _ numerator: N, per denominator: D)
     -> Ratio<N,D> {
-        Ratio<N, D>(value: Double(self), unit: numerator, per: denomenator)
+        Ratio<N, D>(value: Double(self), unit: numerator, per: denominator)
     }
 }
 
@@ -18,6 +18,13 @@ public extension BinaryInteger {
     }
 }
 
+public extension Ratio {
+    init(_ value: Double, _ numeratorUnit: Numerator, per denominatorUnit: Denominator) {
+        self.value = value
+        self.numeratorUnit = numeratorUnit
+        self.denominatorUnit = denominatorUnit
+    }
+}
 
 public extension Ratio
 where Numerator: Dimension, Denominator: Dimension

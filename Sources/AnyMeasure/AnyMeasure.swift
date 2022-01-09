@@ -5,7 +5,7 @@ public struct AnyMeasure: CustomStringConvertible {
         Author: Jason Jobe
         Copyright: 2021 - See enclosed LICENSE
         Credits:
-            //
+            https://github.com/Flight-School/Rate
     """
 
     public init() {
