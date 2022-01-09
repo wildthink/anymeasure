@@ -3,6 +3,8 @@
 Swift For Any Measure: Simplified
 A clean, Swift interface for `Foundation.Measurement`
 
+Read my post about it [here](https://medium.com/@jasonj_2009/measurements-in-swift-enhanced-simplified-again-7095b4600f58).
+
 #### Requirements: Swift 4.0+
 
 ## Motivation
@@ -74,6 +76,9 @@ let package = Package(
 Then run the `swift build` command to build your project.
 
 ## Contact
+- [Medium: Measurements in Swift ](https://medium.com/@jasonj_2009/measurements-in-swift-enhanced-simplified-again-7095b4600f58)
+- @JasonJobe17
+
 
 ## License Information
 
