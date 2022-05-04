@@ -20,12 +20,14 @@ import Foundation
  
  For example, volume over time multiplied by time yields volume:
  
+ ``` swift
  let flowRate = Ratio<UnitVolume, UnitDuration>(value: 84760,
  unit: .cubicFeet,
  per: .seconds)
  let oneDay = Measurement<UnitDuration>(value: 24, unit: .hours)
  
  (flowRate * oneDay).converted(to: .megaliters) // 207371ML
+ ```
  
  A ratio of two related quantities,
  expressed in terms of an amount of numerator unit per single denominator unit.

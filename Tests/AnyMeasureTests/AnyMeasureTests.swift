@@ -63,4 +63,21 @@ final class AnyMeasureTests: XCTestCase {
         let v: Velocity = 55(.kilometers, per: .hours)
         print(v * 2 * 2(.hours)) //  -> 220 km
     }
+    
+    @available(macOS 12.0, *)
+    func testJSON() throws {
+        func parse(_ text: String) throws -> Any? {
+//            JSONSerialization.jsonObject(with:options:)
+            let data: Data = text.data(using: .utf8)!
+            return try JSONSerialization.jsonObject(with: data, options: [.json5Allowed, .topLevelDictionaryAssumed])
+        }
+        
+        if let nob = try? parse(#"a: 1, b: "jon""#) {
+            print(nob)
+        }
+
+        if let nob = try? parse(#"a: 1, b: "jon")"#) {
+            print(nob)
+        }
+    }
 }

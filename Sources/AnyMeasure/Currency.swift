@@ -11,6 +11,16 @@
 // license: "https://openexchangerates.org/license",
 // timestamp: 1517828400,
 // base: "USD",
+
+import Foundation
+
+/**
+ About Exchange Rates
+ The provided exchange rates are NOT current and only intended for test and experimentation.
+ */
+public typealias Currency = Measurement<UnitCurrency>
+
+
 /**
  About Exchange Rates
  The provided exchange rates are NOT current and only intended for test and experimentation.
@@ -38,10 +48,6 @@
  purposes, and we have no liability to you for any loss of profit, loss of business,
  business interruption, or loss of business opportunity.
  */
-import Foundation
-
-public typealias Currency = Measurement<UnitCurrency>
-
 open class CurrencyConverter: UnitConverterLinear {
     
     //    BIG List Below
@@ -126,7 +132,7 @@ extension UnitCurrency {
 }
 
 extension CurrencyConverter {
-    /*
+    /**
      {
      "disclaimer": "Usage subject to terms: https://openexchangerates.org/terms",
      "license": "https://openexchangerates.org/license",
