@@ -1,1 +1,0 @@
-[{"summary":"Image in document abstract will not be displayed","explanation":"Abstracts should only contain (formatted) text. To resolve this issue, place links and images elsewhere in the document, or remove them.","source":"Ratios.md","severity":2,"notes":[],"start":{"line":4,"column":1}}]
