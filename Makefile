@@ -12,9 +12,11 @@ all:
 
 alt:
 	swift package --allow-writing-to-directory ./docs \
-	    generate-documentation --target $(TARGET) \
-	    --disable-indexing \
-	    --transform-for-static-hosting \
-	    --hosting-base-path $(TARGET) \
-	    --output-path ./docs
+		generate-documentation --target $(TARGET) \
+		 --emit-digest  \
+		--disable-indexing \
+		--transform-for-static-hosting \
+		--hosting-base-path $(TARGET) \
+		--output-path ./docs
+
 
