@@ -8,7 +8,7 @@ all:
 		 --emit-digest  \
 		--disable-indexing \
 		--transform-for-static-hosting \
-		--hosting-base-path '$(GITHUB_PAGES)'
+		--hosting-base-path '$(TARGET)'
 
 alt:
 	swift package --allow-writing-to-directory ./docs \
