@@ -64,20 +64,30 @@ final class AnyMeasureTests: XCTestCase {
         print(v * 2 * 2(.hours)) //  -> 220 km
     }
     
-    @available(macOS 12.0, *)
-    func testJSON() throws {
-        func parse(_ text: String) throws -> Any? {
-//            JSONSerialization.jsonObject(with:options:)
-            let data: Data = text.data(using: .utf8)!
-            return try JSONSerialization.jsonObject(with: data, options: [.json5Allowed, .topLevelDictionaryAssumed])
-        }
+    func testCounts() {
+        enum Apple: Countable {}
+        enum Orange: Countable {}
         
-        if let nob = try? parse(#"a: 1, b: "jon""#) {
-            print(nob)
-        }
+        let apples = Measurement(23, Apple.unit)
+        let oranges = Measurement(23, Orange.unit)
 
-        if let nob = try? parse(#"a: 1, b: "jon")"#) {
-            print(nob)
-        }
+        print (apples, oranges)
     }
+    
+//    @available(macOS 12.0, *)
+//    func testJSON() throws {
+//        func parse(_ text: String) throws -> Any? {
+////            JSONSerialization.jsonObject(with:options:)
+//            let data: Data = text.data(using: .utf8)!
+//            return try JSONSerialization.jsonObject(with: data, options: [.json5Allowed, .topLevelDictionaryAssumed])
+//        }
+//
+//        if let nob = try? parse(#"a: 1, b: "jon""#) {
+//            print(nob)
+//        }
+//
+//        if let nob = try? parse(#"a: 1, b: "jon")"#) {
+//            print(nob)
+//        }
+//    }
 }

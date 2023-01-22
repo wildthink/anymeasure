@@ -2,10 +2,10 @@ import Foundation
 
 ///
 /// 
-public struct AnyMeasure: CustomStringConvertible {
+public struct AnyMeasurePackage: CustomStringConvertible {
     public var description: String = """
         Author: Jason Jobe
-        Copyright: 2021 - See enclosed LICENSE
+        Copyright: 2021-2022 - See enclosed LICENSE
         Credits:
             https://github.com/Flight-School/Rate
     """
