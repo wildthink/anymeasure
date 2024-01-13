@@ -13,7 +13,8 @@ let package = Package(
             targets: ["AnyMeasure"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
+//        .package(url: "https://github.com/openalloc/SwiftCompactor.git", from: "1.3.0"),
+        .package(url: "https://github.com/apple/swift-numerics", from: "0.1.0"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     ],
     targets: [
@@ -21,7 +22,10 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "AnyMeasure",
-            dependencies: []),
+            dependencies: [
+                .product(name: "Numerics", package: "swift-numerics"),
+//                .product(name: "SwiftCompactor", package: "SwiftCompactor"),
+            ]),
         .testTarget(
             name: "AnyMeasureTests",
             dependencies: ["AnyMeasure"]),

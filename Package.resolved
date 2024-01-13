@@ -8,6 +8,15 @@
         "revision" : "3303b164430d9a7055ba484c8ead67a52f7b74f6",
         "version" : "1.0.0"
       }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics",
+      "state" : {
+        "revision" : "6583ac70c326c3ee080c1d42d9ca3361dca816cd",
+        "version" : "0.1.0"
+      }
     }
   ],
   "version" : 2

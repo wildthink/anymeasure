@@ -62,13 +62,13 @@ extension Measurement: ExpressibleByNilLiteral where UnitType: Dimension {
 }
 
 public extension BinaryFloatingPoint {
-    func callAsFunction <U: Dimension>(_ units: U) -> Measurement<U> {
+    func callAsFunction <U: Unit>(_ units: U) -> Measurement<U> {
         Measurement(value: Double(self), unit: units)
     }
 }
 
 public extension BinaryInteger {
-    func callAsFunction <U: Dimension>(_ units: U) -> Measurement<U> {
+    func callAsFunction <U: Unit>(_ units: U) -> Measurement<U> {
         Measurement(value: Double(self), unit: units)
     }
 }

@@ -64,15 +64,26 @@ final class AnyMeasureTests: XCTestCase {
         print(v * 2 * 2(.hours)) //  -> 220 km
     }
     
-    func testCounts() {
-        enum Apple: Countable {}
-        enum Orange: Countable {}
-        
-        let apples = Measurement(23, Apple.unit)
-        let oranges = Measurement(23, Orange.unit)
-
-        print (apples, oranges)
+    func testFootprint() {
+        print(MemoryLayout<Length>.size)
+        print(MemoryLayout<Double>.size)
     }
+    
+//    func testMetrics() {
+//        let likes = MetricUnit()
+//    }
+    
+    
+//
+//    func testCounts() {
+//        enum Apple: Countable {}
+//        enum Orange: Countable {}
+//        
+//        let apples = Measurement(23, Apple.unit)
+//        let oranges = Measurement(23, Orange.unit)
+//
+//        print (apples, oranges)
+//    }
     
 //    @available(macOS 12.0, *)
 //    func testJSON() throws {
