@@ -56,6 +56,11 @@ extension Interval : ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
 }
 
 public extension Interval where Element: FixedWidthInteger {
+
+    init(_ r:ClosedRange<Element>) {
+        self.init(r.lowerBound, r.upperBound)
+    }
+
     func randomValue() -> Element {
         Element.random(
             in: Range(uncheckedBounds: (lower: min, upper: max)))
@@ -69,6 +74,13 @@ public extension Interval where Element: FixedWidthInteger {
 }
 
 public extension Interval where Element == Double {
+    init(_ r:ClosedRange<Element>) {
+        self.init(r.lowerBound, r.upperBound)
+    }
+    init<I: FixedWidthInteger>(_ r:ClosedRange<I>) {
+        self.init(.init(r.lowerBound), .init(r.upperBound))
+    }
+
     func randomValue() -> Element {
         Element.random(
             in: Range(uncheckedBounds: (lower: min, upper: max)))

@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "AnyMeasure",
-    platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10), .watchOS(.v6)],
+    platforms: [.macOS(.v10_14), .iOS(.v10), .tvOS(.v10), .watchOS(.v6)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(

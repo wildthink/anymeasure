@@ -69,21 +69,18 @@ final class AnyMeasureTests: XCTestCase {
         print(MemoryLayout<Double>.size)
     }
     
-//    func testMetrics() {
-//        let likes = MetricUnit()
-//    }
-    
-    
-//
-//    func testCounts() {
-//        enum Apple: Countable {}
-//        enum Orange: Countable {}
-//        
-//        let apples = Measurement(23, Apple.unit)
-//        let oranges = Measurement(23, Orange.unit)
-//
-//        print (apples, oranges)
-//    }
+    func testMetrics() {
+        let likes = Measurement(0, .metric(count: "likes", range: 0...1000))
+        print(likes)
+        print(likes.unit)
+        print(likes.unit.randomValue().formatted())
+    }
+
+    func testCounts() {
+        let apples = Measurement(23, .count(of: "apples"))
+        let oranges = Measurement(25, .count(of: "oranges"))
+        print (apples.description, oranges.description)
+    }
     
 //    @available(macOS 12.0, *)
 //    func testJSON() throws {
