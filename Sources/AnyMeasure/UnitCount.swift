@@ -52,13 +52,13 @@ public final class UnitCount: Unit {
     }
 
     public override func format(
-        _ doubleValue: Double,
+        _ value: NSMeasurement,
         style: Formatter.UnitStyle = .short,
         unit: MeasurementFormatter.UnitOptions = .providedUnit
     ) -> String {
         let fmt = NumberFormatter()
         fmt.numberStyle = .decimal
-        let vs = fmt.string(for: doubleValue) ?? String(doubleValue)
+        let vs = fmt.string(for: value.doubleValue) ?? String(value.doubleValue)
         switch style {
             case .short:
                 return "\(vs)#\(subject)"

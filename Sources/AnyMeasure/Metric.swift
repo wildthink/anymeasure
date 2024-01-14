@@ -61,11 +61,11 @@ public class Metric: Unit {
     }
     
     public override func format(
-        _ doubleValue: Double,
+        _ value: NSMeasurement,
         style: Formatter.UnitStyle = .short,
         unit: MeasurementFormatter.UnitOptions = .providedUnit
     ) -> String {
-        let ms = units.format(doubleValue)
+        let ms = units.format(value)
         
         switch style {
             case .short:

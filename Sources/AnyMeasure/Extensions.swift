@@ -14,14 +14,15 @@ public extension NSMeasurement {
         style: Formatter.UnitStyle = .short,
         unit: MeasurementFormatter.UnitOptions = .providedUnit
     ) -> String {
-        self.unit.format(self.doubleValue, style: style, unit: unit)
+        self.unit.format(self, style: style, unit: unit)
     }
 }
 
 public extension Unit {
     
     @objc func format(
-        _ doubleValue: Double,
+//        _ value: Double,
+        _ value: NSMeasurement,
         style: Formatter.UnitStyle = .short,
         unit: MeasurementFormatter.UnitOptions = .providedUnit
     ) -> String {
@@ -29,6 +30,6 @@ public extension Unit {
         fmt.unitStyle = style
         fmt.unitOptions = unit
         fmt.numberFormatter.numberStyle = .decimal
-        return fmt.string(for: doubleValue) ?? "\(doubleValue)\(self.symbol)"
+        return fmt.string(for: value) ?? "\(value.doubleValue)\(self.symbol)"
     }
 }
