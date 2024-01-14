@@ -7,10 +7,14 @@
 
 import Foundation
 
-public class Metric: Unit {
-    var label: Subject
-    var range: Interval<Double>
+public class Metric: Unit, UnitPresentation {
+    public var subject: String { label.name }
+    public var range: ClosedRange<Double> { _range.range }
+
+    public private(set) var label: Subject
+    var _range: Interval<Double>
     var units: Unit
+    // cadance, frequeny, recurs
     var cycle: Duration
     
     public init(
@@ -20,7 +24,7 @@ public class Metric: Unit {
         range: Interval<Double>
     ) {
         self.label = label
-        self.range = range
+        self._range = range
         self.units = units
         self.cycle = cycle
         super.init(symbol: units.symbol)
@@ -31,12 +35,12 @@ public class Metric: Unit {
     }
         
     public func randomValue(using gen: inout RandomNumberGenerator) -> NSMeasurement {
-        let r = range.randomValue(using: &gen)
+        let r = _range.randomValue(using: &gen)
         return Measurement(value: r, unit: self) as NSMeasurement
     }
     
     public func randomValue() -> NSMeasurement {
-        let r = range.randomValue()
+        let r = _range.randomValue()
         return Measurement(value: r, unit: self) as NSMeasurement
     }
     

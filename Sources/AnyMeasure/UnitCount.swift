@@ -7,13 +7,18 @@
 
 import Foundation
 
-public final class UnitCount: Unit {
+public final class UnitCount: Unit, UnitPresentation {
     public let subject: String
-    public var range: Interval<Double>
-
+    var _range: Interval<Double>
+    
+    public var range: ClosedRange<Double> {
+        _range.range
+//        Range(uncheckedBounds: (lower: min, upper: max)))
+    }
+    
     public init(subject: String, symbol: String = "#", range: ClosedRange<Double>) {
         self.subject = subject
-        self.range = .init(range)
+        self._range = .init(range)
         super.init(symbol: symbol)
     }
     
@@ -22,12 +27,12 @@ public final class UnitCount: Unit {
     }
     
     public func randomValue(using gen: inout RandomNumberGenerator) -> NSMeasurement {
-        let r = range.randomValue(using: &gen)
+        let r = _range.randomValue(using: &gen)
         return Measurement(value: r, unit: self) as NSMeasurement
     }
     
     public func randomValue() -> NSMeasurement {
-        let r = range.randomValue()
+        let r = _range.randomValue()
         return Measurement(value: r, unit: self) as NSMeasurement
     }
 
@@ -74,15 +79,21 @@ public final class UnitCount: Unit {
 
 extension Unit {
     @objc
-    public class func count(of subj: String, max: Double = 1_000) -> UnitCount {
+    public class func count(of subj: String, max: Double = 100) -> UnitCount {
         return UnitCount(subject: subj, range: 0...max)
     }
 }
 
 extension UnitCount {
     @objc
-    public override class func count(of subj: String, max: Double = 1_000) -> UnitCount {
+    public override class func count(of subj: String, max: Double = 100) -> UnitCount {
         return UnitCount(subject: subj, range: 0...max)
+    }
+}
+
+public extension NSMeasurement {
+    static func count(start: Double = 0, of subj: String, max: Double = 100) -> NSMeasurement {
+        NSMeasurement(doubleValue: start, unit: .count(of: subj, max: max))
     }
 }
 

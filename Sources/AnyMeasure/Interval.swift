@@ -71,6 +71,10 @@ public extension Interval where Element: FixedWidthInteger {
             in: Range(uncheckedBounds: (lower: min, upper: max)),
             using: &gen)
     }
+    
+    var range: Range<Element> {
+        Range(uncheckedBounds: (lower: min, upper: max))
+    }
 }
 
 public extension Interval where Element == Double {
@@ -91,6 +95,11 @@ public extension Interval where Element == Double {
             in: Range(uncheckedBounds: (lower: min, upper: max)),
             using: &gen)
     }
+    
+    var range: ClosedRange<Element> {
+        ClosedRange(uncheckedBounds: (lower: min, upper: max))
+    }
+
 }
 
 /// comparison
