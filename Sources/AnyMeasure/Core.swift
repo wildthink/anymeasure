@@ -43,21 +43,30 @@ where Numerator: Dimension, Denominator: Dimension
 
 // MARK: - Measurement Constructor and Conversion Extensions
 
-extension Measurement: ExpressibleByFloatLiteral where UnitType: Dimension {
+extension Unit {
+    public static func literalUnit() -> Self {
+        if let f = Self.self as? Dimension.Type {
+            return f.init(symbol: "<unit>") as! Self
+        }
+        return Self(symbol: "")
+    }
+}
+
+extension Measurement: ExpressibleByFloatLiteral where UnitType: Unit {
     public init(floatLiteral value: Double) {
-        self = Measurement(value: value, unit: UnitType.baseUnit())
+        self = Measurement(value: value, unit: UnitType.literalUnit())
     }
 }
 
-extension Measurement: ExpressibleByIntegerLiteral where UnitType: Dimension {
+extension Measurement: ExpressibleByIntegerLiteral where UnitType: Unit {
     public init(integerLiteral value: Double) {
-        self = Measurement(value: value, unit: UnitType.baseUnit())
+        self = Measurement(value: value, unit: UnitType.literalUnit())
     }
 }
 
-extension Measurement: ExpressibleByNilLiteral where UnitType: Dimension {
+extension Measurement: ExpressibleByNilLiteral where UnitType: Unit {
     public init(nilLiteral: ()) {
-        self = Measurement(value: 0, unit: UnitType.baseUnit())
+        self = Measurement(value: 0, unit: UnitType.literalUnit())
     }
 }
 

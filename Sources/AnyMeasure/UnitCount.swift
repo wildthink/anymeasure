@@ -7,6 +7,9 @@
 
 import Foundation
 
+public typealias Count = Measurement<UnitCount>
+
+
 public final class UnitCount: Unit, UnitPresentation {
     public let subject: String
     var _range: Interval<Double>
@@ -112,6 +115,7 @@ public extension Measurement where UnitType == UnitCount {
     }
 }
 
+// MARK: Percent
 /// Percentage Unit
 final public class UnitPercent: Unit {
     
