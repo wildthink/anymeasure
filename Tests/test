@@ -1,0 +1,10 @@
+enum ExchangeRate: Double, Codable {
+    case KYD = 0.833333
+    case CNY = 7.165629
+    case VUV = 118.243894
+    case AZN = 1.700134
+    case GTQ = 7.750961
+
+    var code: String { String(describing: self) }
+    var rate: Double { rawValue }
+}

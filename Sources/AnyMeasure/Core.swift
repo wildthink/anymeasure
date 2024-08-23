@@ -52,23 +52,23 @@ extension Unit {
     }
 }
 
-extension Measurement: ExpressibleByFloatLiteral where UnitType: Unit {
-    public init(floatLiteral value: Double) {
-        self = Measurement(value: value, unit: UnitType.literalUnit())
-    }
-}
-
-extension Measurement: ExpressibleByIntegerLiteral where UnitType: Unit {
-    public init(integerLiteral value: Double) {
-        self = Measurement(value: value, unit: UnitType.literalUnit())
-    }
-}
-
-extension Measurement: ExpressibleByNilLiteral where UnitType: Unit {
-    public init(nilLiteral: ()) {
-        self = Measurement(value: 0, unit: UnitType.literalUnit())
-    }
-}
+//extension Measurement: ExpressibleByFloatLiteral where UnitType: Unit {
+//    public init(floatLiteral value: Double) {
+//        self = Measurement(value: value, unit: UnitType.literalUnit())
+//    }
+//}
+//
+//extension Measurement: ExpressibleByIntegerLiteral where UnitType: Unit {
+//    public init(integerLiteral value: Double) {
+//        self = Measurement(value: value, unit: UnitType.literalUnit())
+//    }
+//}
+//
+//extension Measurement: ExpressibleByNilLiteral where UnitType: Unit {
+//    public init(nilLiteral: ()) {
+//        self = Measurement(value: 0, unit: UnitType.literalUnit())
+//    }
+//}
 
 public extension BinaryFloatingPoint {
     func callAsFunction <U: Unit>(_ units: U) -> Measurement<U> {

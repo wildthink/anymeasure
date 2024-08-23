@@ -94,17 +94,17 @@ public final class UnitCurrency: Dimension, Codable {
         super.init(symbol: symbol, converter: UnitCurrency.instantiateConverter(symbol))
     }
     
-    public init (country: String) {
-        country_code = country
-        let locale = Locale(identifier: country)
-        let currencySymbol = locale.currencyCode!
-        super.init(symbol: currencySymbol, converter: UnitCurrency.instantiateConverter(currencySymbol))
-    }
+//    public init? (country: String) {
+//        country_code = country
+//        let locale = Locale(identifier: country)
+//        let currencySymbol = locale.currency?.identifier
+//        super.init(symbol: currencySymbol, converter: UnitCurrency.instantiateConverter(currencySymbol))
+//    }
     
     public var currencyCode: String? {
         guard let country_code = country_code else { return nil }
         let locale = Locale(identifier: country_code)
-        return locale.currencyCode
+        return locale.currency?.identifier
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -313,3 +313,94 @@ extension CurrencyConverter {
     ]
 }
 
+
+// MARK: - ExchangeRates
+// https://open.er-api.com/v6/latest/USD
+
+struct ExchangeRates: Codable {
+    let result: String
+    let provider, documentation, termsOfUse: String
+    let timeLastUpdateUnix: Int
+    let timeLastUpdateUTC: String
+    let timeNextUpdateUnix: Int
+    let timeNextUpdateUTC: String
+    let timeEOLUnix: Int
+    let baseCode: String
+    let rates: [String: Double]
+
+    enum CodingKeys: String, CodingKey {
+        case result, provider, documentation
+        case termsOfUse = "terms_of_use"
+        case timeLastUpdateUnix = "time_last_update_unix"
+        case timeLastUpdateUTC = "time_last_update_utc"
+        case timeNextUpdateUnix = "time_next_update_unix"
+        case timeNextUpdateUTC = "time_next_update_utc"
+        case timeEOLUnix = "time_eol_unix"
+        case baseCode = "base_code"
+        case rates
+    }
+    
+}
+
+// Enum Generator
+
+extension URL {
+    static var exchangeRates: URL { URL(string: "https://open.er-api.com/v6/latest/USD")! }
+}
+
+extension ExchangeRates {
+    struct MetaData: Codable {
+        var provider: URL
+        var documentation: URL
+        var lastUpdate: Date
+        var nextUpdate: Date
+    }
+    
+    var metadata: MetaData {
+        MetaData(provider: URL(string: self.provider)!,
+                 documentation: URL(string: self.documentation)!,
+                 lastUpdate: Date(timeIntervalSince1970: TimeInterval(self.timeLastUpdateUTC)!),
+                 nextUpdate: Date(timeIntervalSince1970: TimeInterval(self.timeNextUpdateUTC)!))
+    }
+    
+    func generateEnum(limit: Int = 500) -> String {
+        var str = "enum ExchangeRate: Double, Codable {\n"
+        
+        var count = 0
+        for (key, value) in rates {
+            print("    case \(key.uppercased()) = \(value)", to: &str)
+//            str += "    case \(key.uppercased()) = \(value)\n"
+            count += 1
+            if count >= limit { break }
+        }
+        print("""
+        
+            var code: String { String(describing: self) }
+            var rate: Double { rawValue }
+        }
+        """, to: &str)
+        return str
+     }
+}
+
+extension ExchangeRates {
+    
+    init(from url: URL) throws {
+        let data = try Data(contentsOf: url)
+        self = try ExchangeRates(from: data)
+    }
+    
+    init(from data: Data) throws {
+        let dc = JSONDecoder()
+        let json = try dc.decode(ExchangeRates.self, from: data)
+        self = json
+    }
+    
+    static var sample: ExchangeRates {
+        try! ExchangeRates(from: jsonData)
+    }
+    
+    static var jsonData = """
+{"result":"success","provider":"https://www.exchangerate-api.com","documentation":"https://www.exchangerate-api.com/docs/free","terms_of_use":"https://www.exchangerate-api.com/terms","time_last_update_unix":1724025751,"time_last_update_utc":"Mon, 19 Aug 2024 00:02:31 +0000","time_next_update_unix":1724112381,"time_next_update_utc":"Tue, 20 Aug 2024 00:06:21 +0000","time_eol_unix":0,"base_code":"USD","rates":{"USD":1,"AED":3.6725,"AFN":71.016252,"ALL":90.546764,"AMD":388.108035,"ANG":1.79,"AOA":896.224421,"ARS":944,"AUD":1.500276,"AWG":1.79,"AZN":1.700134,"BAM":1.774989,"BBD":2,"BDT":117.540636,"BGN":1.775043,"BHD":0.376,"BIF":2881.348943,"BMD":1,"BND":1.316504,"BOB":6.930177,"BRL":5.472157,"BSD":1,"BTN":83.920117,"BWP":13.400365,"BYN":3.264038,"BZD":2,"CAD":1.368645,"CDF":2850.844721,"CHF":0.867267,"CLP":936.549977,"CNY":7.165629,"COP":4017.47619,"CRC":520.078062,"CUP":24,"CVE":100.06963,"CZK":22.866531,"DJF":177.721,"DKK":6.769635,"DOP":59.828471,"DZD":134.353208,"EGP":48.838355,"ERN":15,"ETB":109.541281,"EUR":0.907539,"FJD":2.234295,"FKP":0.773355,"FOK":6.769766,"GBP":0.773358,"GEL":2.686386,"GGP":0.773355,"GHS":15.611113,"GIP":0.773355,"GMD":70.421657,"GNF":8704.905422,"GTQ":7.750961,"GYD":209.309134,"HKD":7.79508,"HNL":24.831503,"HRK":6.837842,"HTG":131.717583,"HUF":358.428746,"IDR":15688.05663,"ILS":3.677988,"IMP":0.773355,"INR":83.920127,"IQD":1310.696768,"IRR":42069.27132,"ISK":139.106032,"JEP":0.773355,"JMD":157.210066,"JOD":0.709,"JPY":148.042596,"KES":128.979169,"KGS":85.734152,"KHR":4124.246671,"KID":1.500269,"KMF":446.479215,"KRW":1350.003043,"KWD":0.305712,"KYD":0.833333,"KZT":478.947251,"LAK":22023.722412,"LBP":89500,"LKR":298.566193,"LRD":195.260541,"LSL":17.861494,"LYD":4.792865,"MAD":9.772076,"MDL":17.582754,"MGA":4577.467135,"MKD":55.944868,"MMK":2102.108564,"MNT":3378.947165,"MOP":8.028932,"MRU":39.799971,"MUR":46.314541,"MVR":15.421968,"MWK":1737.451325,"MXN":18.63293,"MYR":4.431477,"MZN":63.913789,"NAD":17.861494,"NGN":1589.504939,"NIO":36.850468,"NOK":10.68785,"NPR":134.272187,"NZD":1.652117,"OMR":0.384497,"PAB":1,"PEN":3.742677,"PGK":3.887325,"PHP":57.082917,"PKR":278.486704,"PLN":3.870604,"PYG":7608.243841,"QAR":3.64,"RON":4.526961,"RSD":106.443087,"RUB":89.378323,"RWF":1322.06323,"SAR":3.75,"SBD":8.505192,"SCR":13.518586,"SDG":458.739153,"SEK":10.454472,"SGD":1.316512,"SHP":0.773355,"SLE":22.451424,"SLL":22451.423718,"SOS":571.890189,"SRD":28.893735,"SSP":2683.857048,"STN":22.23467,"SYP":12860.52293,"SZL":17.861494,"THB":34.85934,"TJS":10.605885,"TMT":3.500532,"TND":3.066811,"TOP":2.338029,"TRY":33.706931,"TTD":6.79389,"TVD":1.500269,"TWD":32.092281,"TZS":2702.2802,"UAH":41.227988,"UGX":3724.132235,"UYU":40.421881,"UZS":12707.572003,"VES":36.6848,"VND":25048.492735,"VUV":118.243894,"WST":2.729339,"XAF":595.30562,"XCD":2.7,"XDR":0.748415,"XOF":595.30562,"XPF":108.298273,"YER":250.319587,"ZAR":17.860111,"ZMW":26.375513,"ZWL":13.7902}}
+""".data(using: .utf8)!
+}

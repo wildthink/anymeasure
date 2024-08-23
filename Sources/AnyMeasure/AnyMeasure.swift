@@ -18,7 +18,7 @@ public struct AnyMeasurePackage: CustomStringConvertible {
 public typealias Mass = Measurement<UnitMass>
 
 /// Units of measure for time duration
-public typealias TimeSpan = Measurement<UnitDuration>
+public typealias TimeFrame = Measurement<UnitDuration>
 
 /// Units of measure for planar angle and rotation.
 public typealias Angle = Measurement<UnitAngle>

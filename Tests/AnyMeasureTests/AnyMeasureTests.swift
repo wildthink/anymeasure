@@ -49,7 +49,7 @@ final class AnyMeasureTests: XCTestCase {
     }
     
     func testDuration() {
-        let d4: Duration = 34(.hours).converted(to: .minutes)
+        let d4: TimeFrame = 34(.hours).converted(to: .minutes)
         XCTAssert(d4 == (34 * 60)(.minutes))
     }
     

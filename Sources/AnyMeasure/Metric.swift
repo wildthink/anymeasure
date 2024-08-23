@@ -15,12 +15,12 @@ public class Metric: Unit, UnitPresentation {
     var _range: Interval<Double>
     var units: Unit
     // cadance, frequeny, recurs
-    var cycle: TimeSpan
+    var cycle: TimeFrame
     
     public init(
         _ label: Subject,
         units: Unit,
-        cycle: TimeSpan = .zero,
+        cycle: TimeFrame = .zero,
         range: Interval<Double>
     ) {
         self.label = label
