@@ -94,3 +94,8 @@ Thanks to
 ## Other Resources
 https://github.com/hyperjeff/Physical
 
+Swift Measures
+A package containing a set of objects and protocols to create and convert units of measure, for the Swift programming language.
+https://bikecalc.github.io/swift-measures/documentation/measures/time
+https://github.com/BikeCalc/swift-measures.git
+
