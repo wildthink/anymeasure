@@ -19,12 +19,34 @@ public extension UnitDuration {
 //    static let hours = UnitDuration(symbol: "hours", converter: UnitConverterLinear(coefficient: (3600))
 
     static let days = UnitDuration(symbol: "days", converter: UnitConverterLinear(coefficient: SecondsPerDay))
+    static let day = days
     
     static let weeks = UnitDuration(symbol: "weeks", converter: UnitConverterLinear(coefficient: SecondsPerDay * 7))
+    static let week = weeks
     
     static let months = UnitDuration(symbol: "months", converter: UnitConverterLinear(coefficient: SecondsPerDay * 30.4))
+    static let month = months
     
     static let years = UnitDuration(symbol: "years", converter: UnitConverterLinear(coefficient: SecondsPerDay * 365.25))
+    static let year = years
+}
+
+public extension TimeFrame {
+    /// Converts to seconds, the canonical  unit of ``TimeInterval``.
+    var timeInterval: TimeInterval {
+        TimeInterval(self.converted(to: .seconds).value)
+    }
+}
+public extension Date {
+
+    static func + (lhs: Date, rhs: TimeFrame) -> Date {
+        lhs.addingTimeInterval(rhs.timeInterval)
+    }
+
+    static func - (lhs: Date, rhs: TimeFrame) -> Date {
+        lhs.addingTimeInterval(-rhs.timeInterval)
+    }
+
 }
 
 public extension Duration {
