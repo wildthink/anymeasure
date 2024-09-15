@@ -1,6 +1,6 @@
 import RealModule
 
-public protocol IntervalElement: Real,
+public protocol IntervalElement: Real, Codable,
                                  ExpressibleByFloatLiteral, CustomDebugStringConvertible {}
 
 extension Double:   IntervalElement {}
@@ -11,7 +11,7 @@ extension Float:    IntervalElement {}
 // extension Float80:  IntervalElement {}
 #endif
 /// definition
-public struct Interval<F:IntervalElement> : Hashable {
+public struct Interval<F:IntervalElement> : Hashable, Codable {
     public typealias Element = F
     public var (min, max):(F, F)
     public init(min:F, max:F) {
@@ -333,7 +333,7 @@ extension Interval : CustomStringConvertible, CustomDebugStringConvertible {
         return "(\(self.min.debugDescription)...\(self.max.debugDescription))"
     }
 }
-extension Interval : Codable where F:Codable {
+extension Interval {
     public enum CodingKeys : String, CodingKey {
         public typealias RawValue = String
         case min, max

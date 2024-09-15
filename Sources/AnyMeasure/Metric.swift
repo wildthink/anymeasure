@@ -8,25 +8,25 @@
 import Foundation
 
 public class Metric: Unit, UnitPresentation {
-    public var subject: String { label.name }
+    public var label: String { subject.name }
     public var range: ClosedRange<Double> { _range.range }
 
-    public private(set) var label: Subject
+    public private(set) var subject: Subject
     var _range: Interval<Double>
     var units: Unit
     // cadance, frequeny, recurs
-    var cycle: TimeFrame
+//    var cycle: TimeFrame
     
     public init(
-        _ label: Subject,
+        _ subject: Subject,
         units: Unit,
-        cycle: TimeFrame = .zero,
+//        cycle: TimeFrame = .zero,
         range: Interval<Double>
     ) {
-        self.label = label
+        self.subject = subject
         self._range = range
         self.units = units
-        self.cycle = cycle
+//        self.cycle = cycle
         super.init(symbol: units.symbol)
     }
     
@@ -54,13 +54,13 @@ public class Metric: Unit, UnitPresentation {
     ) -> String {
         switch style {
             case .short:
-                return "\(label.name)_\(units.symbol)"
+                return "\(label)_\(units.symbol)"
             case .medium:
-                return "\(label.name) in \(units.symbol)"
+                return "\(label) in \(units.symbol)"
             case .long:
-                return "\(label.name) in \(units.symbol)"
+                return "\(label) in \(units.symbol)"
             @unknown default:
-                return "\(label.name)_\(units.symbol)"
+                return "\(label)_\(units.symbol)"
         }
     }
     
@@ -73,13 +73,13 @@ public class Metric: Unit, UnitPresentation {
         
         switch style {
             case .short:
-                return "\(label.name)(\(ms))"
+                return "\(label)(\(ms))"
             case .medium:
-                return "\(label.name) in \(ms)"
+                return "\(label) in \(ms)"
             case .long:
-                return "\(label.name) in \(ms)"
+                return "\(label) in \(ms)"
             @unknown default:
-                return "\(label.name)_\(units.symbol)"
+                return "\(label)_\(units.symbol)"
         }
     }
 }
@@ -92,12 +92,12 @@ extension Metric {
     
     public class
     func metric(count: Subject, range: Interval<Double>) -> Metric {
-        return Metric(count, units: .count(of: count.name), range: range)
+        return Metric(count, units: .count(), range: range)
     }
     
     public class
     func metric(count: Subject, range: ClosedRange<Int>) -> Metric {
-        return Metric(count, units: .count(of: count.name), range: .init(range))
+        return Metric(count, units: .count(), range: .init(range))
     }
 }
 
@@ -112,7 +112,7 @@ public extension Measurement where UnitType == Metric {
     }
 }
 
-public struct Subject: ExpressibleByStringLiteral {
+public struct Subject: ExpressibleByStringLiteral, Codable, Equatable, Hashable {
     public static func named(_ name: String) -> Self {
         .init(name)
     }

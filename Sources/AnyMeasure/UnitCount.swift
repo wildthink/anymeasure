@@ -11,7 +11,7 @@ public typealias Count = Measurement<UnitCount>
 
 
 public final class UnitCount: Unit, UnitPresentation {
-    public let subject: String
+    public var label: String { "Count" }
     var _range: Interval<Double>
     
     public var range: ClosedRange<Double> {
@@ -19,8 +19,7 @@ public final class UnitCount: Unit, UnitPresentation {
 //        Range(uncheckedBounds: (lower: min, upper: max)))
     }
     
-    public init(subject: String, symbol: String = "#", range: ClosedRange<Double>) {
-        self.subject = subject
+    public init(symbol: String = "#", range: ClosedRange<Double>) {
         self._range = .init(range)
         super.init(symbol: symbol)
     }
@@ -49,13 +48,13 @@ public final class UnitCount: Unit, UnitPresentation {
     ) -> String {
         switch style {
             case .short:
-                return "#\(subject)"
+                return "#\(label)"
             case .medium:
-                return "# of \(subject)"
+                return "# of \(label)"
             case .long:
-                return "count of \(subject)"
+                return "count of \(label)"
             @unknown default:
-                return "#\(subject)"
+                return "#\(label)"
         }
     }
 
@@ -69,34 +68,34 @@ public final class UnitCount: Unit, UnitPresentation {
         let vs = fmt.string(for: value.doubleValue) ?? String(value.doubleValue)
         switch style {
             case .short:
-                return "\(vs)#\(subject)"
+                return "\(vs)#\(label)"
             case .medium:
-                return "\(vs)#_\(subject)"
+                return "\(vs)#_\(label)"
             case .long:
-                return "\(vs) count of \(subject)"
+                return "\(vs) count of \(label)"
             @unknown default:
-                return "\(vs)#\(subject)"
+                return "\(vs)#\(label)"
         }
     }
 }
 
 extension Unit {
     @objc
-    public class func count(of subj: String, max: Double = 100) -> UnitCount {
-        return UnitCount(subject: subj, range: 0...max)
+    public class func count(max: Double = 100) -> UnitCount {
+        return UnitCount(range: 0...max)
     }
 }
 
 extension UnitCount {
     @objc
-    public override class func count(of subj: String, max: Double = 100) -> UnitCount {
-        return UnitCount(subject: subj, range: 0...max)
+    public override class func count(max: Double = 100) -> UnitCount {
+        return UnitCount(range: 0...max)
     }
 }
 
 public extension NSMeasurement {
-    static func count(start: Double = 0, of subj: String, max: Double = 100) -> NSMeasurement {
-        NSMeasurement(doubleValue: start, unit: .count(of: subj, max: max))
+    static func count(start: Double = 0, max: Double = 100) -> NSMeasurement {
+        NSMeasurement(doubleValue: start, unit: .count(max: max))
     }
 }
 
@@ -107,7 +106,7 @@ public extension Measurement where UnitType == UnitCount {
     }
 
     static var zero: Measurement<UnitType> {
-        Measurement(value: 0, unit: .count(of: "empty"))
+        Measurement(value: 0, unit: .count())
     }
     
     var description: String {

@@ -63,7 +63,7 @@ public extension Unit {
 
 // MARK: - Presentation
 public protocol UnitPresentation {
-    var subject: String { get }
+    var label: String { get }
     var range: ClosedRange<Double> { get }
 }
 
@@ -74,9 +74,9 @@ public struct UnitPresentationConfig: UnitPresentation {
         self.value = value
     }
     
-    public var subject: String {
+    public var label: String {
         if let p = value.unit as? UnitPresentation {
-            return p.subject
+            return p.label
         } else {
             return String(String(describing: type(of: value.unit)))
         }
