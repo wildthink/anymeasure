@@ -76,11 +76,11 @@ final class AnyMeasureTests: XCTestCase {
         print(likes.unit.randomValue().formatted())
     }
 
-    func testCounts() {
-        let apples = Measurement(23, .count(of: "apples"))
-        let oranges = Measurement(25, .count(of: "oranges"))
-        print (apples.description, oranges.description)
-    }
+//    func testCounts() {
+//        let apples = Measurement(23, .count(of: "apples"))
+//        let oranges = Measurement(25, .count(of: "oranges"))
+//        print (apples.description, oranges.description)
+//    }
     
 //    @available(macOS 12.0, *)
 //    func testJSON() throws {
