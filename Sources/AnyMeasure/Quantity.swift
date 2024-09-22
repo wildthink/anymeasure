@@ -107,4 +107,5 @@ func example() {
     
     // Combine inventories
     let combinedInventory = inventory + otherInventory
+    print(combinedInventory)
 }
